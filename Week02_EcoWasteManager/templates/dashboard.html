@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Eco Waste Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>♻️ Eco Waste Manager</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- User Profile Card -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <h2 id="userName">Loading...</h2>
+                <p id="userEmail">Loading...</p>
+                <div class="points-display">
+                    <h3 id="userPoints">0</h3>
+                    <p>Eco Points</p>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- User Stats -->
+            <section class="user-stats">
+                <h2>Your Statistics</h2>
+                <div class="stats-grid-user">
+                    <div class="stat-card">
+                        <h3 id="totalWasteUser">0</h3>
+                        <p>kg Total Waste</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="carbonReduction">0</h3>
+                        <p>kg CO₂ Saved</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="recycledCount">0</h3>
+                        <p>Items Recycled</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="memberSince">Loading...</h3>
+                        <p>Member Since</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Waste Logging Form -->
+            <section class="waste-form-section">
+                <h2>Log Waste Entry</h2>
+                <form id="wasteForm" onsubmit="logWaste(event)">
+                    <div class="form-group">
+                        <label for="category">Waste Category</label>
+                        <select id="category" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" step="0.1" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recycled">
+                            <input type="checkbox" id="recycled" checked> This waste will be recycled
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Log Waste</button>
+                </form>
+            </section>
+
+            <!-- Category Information -->
+            <section class="categories-section">
+                <h2>Waste Categories</h2>
+                <div class="categories-grid" id="categoriesGrid">
+                    Loading categories...
+                </div>
+            </section>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="message success" style="display:none;">
+                Waste logged successfully! Keep up the great work! ✅
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Eco Waste Manager - Smart Waste Management System</p>
+    </footer>
+
+    <script>
+        const userId = {{ user_id }};
+        let categories = [];
+
+        // Load user stats on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserStats();
+            loadCategories();
+        });
+
+        function loadUserStats() {
+            fetch(`/api/user/${userId}/stats`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('userName').textContent = data.name;
+                    document.getElementById('userEmail').textContent = data.email;
+                    document.getElementById('userPoints').textContent = data.points;
+                    document.getElementById('totalWasteUser').textContent = data.total_waste_kg.toFixed(2);
+                    document.getElementById('carbonReduction').textContent = data.carbon_saved_kg;
+                    document.getElementById('recycledCount').textContent = data.recycled_count;
+                    
+                    const date = new Date(data.joined_date);
+                    document.getElementById('memberSince').textContent = date.toLocaleDateString();
+                })
+                .catch(error => console.error('Error loading stats:', error));
+        }
+
+        function loadCategories() {
+            fetch('/api/categories')
+                .then(response => response.json())
+                .then(data => {
+                    categories = data;
+                    const select = document.getElementById('category');
+                    select.innerHTML = '<option value="">Select Category</option>';
+                    data.forEach(cat => {
+                        select.innerHTML += `<option value="${cat.id}">${cat.category} - ${cat.description}</option>`;
+                    });
+                    
+                    // Display category cards
+                    const grid = document.getElementById('categoriesGrid');
+                    grid.innerHTML = '';
+                    data.forEach(cat => {
+                        grid.innerHTML += `
+                            <div class="category-card">
+                                <h3>${cat.category}</h3>
+                                <p>${cat.description}</p>
+                                <div class="category-info">
+                                    <span>CO₂ Reduction: ${cat.carbon_reduction} kg/kg</span>
+                                    <span>${cat.recyclable ? '♻️ Recyclable' : '⚠️ Non-recyclable'}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                })
+                .catch(error => console.error('Error loading categories:', error));
+        }
+
+        function logWaste(event) {
+            event.preventDefault();
+            
+            const categoryId = document.getElementById('category').value;
+            const weight = parseFloat(document.getElementById('weight').value);
+            const isRecycled = document.getElementById('recycled').checked;
+            
+            fetch('/api/waste/log', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    category_id: categoryId,
+                    weight_kg: weight,
+                    is_recycled: isRecycled
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reset form
+                document.getElementById('wasteForm').reset();
+                
+                // Show success message
+                const msgDiv = document.getElementById('successMessage');
+                msgDiv.style.display = 'block';
+                setTimeout(() => msgDiv.style.display = 'none', 3000);
+                
+                // Reload stats
+                loadUserStats();
+            })
+            .catch(error => console.error('Error logging waste:', error));
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/';
+            }
+        }
+    </script>
+</body>
+</html>
