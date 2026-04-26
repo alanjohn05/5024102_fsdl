@@ -1,39 +1,55 @@
-<div class="form-container">
-    <h2>Student Portal 🎓</h2>
-    <p class="subtitle">Create your academic profile in seconds.</p>
-    
-    <div class="progress-bar">
-        <div class="progress-fill"></div>
-    </div>
-
-    <h3>Step 1: Account Details</h3>
-
-    <div class="input-group">
-        <label>Full Name *</label>
-        <input type="text" placeholder="Enter your full name">
-    </div>
-
-    <div class="row">
-        <div class="input-group">
-            <label>Email *</label>
-            <input type="email" placeholder="email@example.com">
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #0f172a; display: flex; justify-content: center; padding: 50px; font-family: sans-serif; }
+        .form-card {
+            background: #1e1b4b;
+            padding: 40px;
+            border-radius: 24px;
+            color: white;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        h2 { margin: 0; font-size: 24px; }
+        .subtitle { color: #94a3b8; font-size: 14px; margin: 8px 0 20px; }
+        .progress-track { background: #312e81; height: 4px; border-radius: 2px; margin-bottom: 25px; }
+        .progress-fill { width: 30%; height: 100%; background: linear-gradient(90deg, #0d9488, #3b82f6); }
+        .step { color: #2dd4bf; font-weight: bold; font-size: 14px; margin-bottom: 20px; display: block; }
+        .input-box { margin-bottom: 15px; }
+        label { display: block; font-size: 13px; margin-bottom: 6px; }
+        input {
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #4338ca;
+            background: rgba(255,255,255,0.05); color: white; box-sizing: border-box;
+        }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .btn {
+            background: linear-gradient(90deg, #0d9488, #1e3a8a);
+            color: white; border: none; padding: 12px 30px; border-radius: 30px;
+            cursor: pointer; float: right; margin-top: 15px; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-card">
+        <h2>Student Portal 🎓</h2>
+        <p class="subtitle">Create your academic profile in seconds.</p>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <span class="step">Step 1: Account Details</span>
+        <div class="input-box">
+            <label>Full Name *</label>
+            <input type="text" placeholder="Enter your full name">
         </div>
-        <div class="input-group">
-            <label>Date of Birth</label>
-            <input type="date">
+        <div class="grid">
+            <div class="input-box"><label>Email *</label><input type="email" placeholder="email@example.com"></div>
+            <div class="input-box"><label>Date of Birth</label><input type="date"></div>
         </div>
+        <div class="grid">
+            <div class="input-box"><label>Password *</label><input type="password" placeholder="••••••••"></div>
+            <div class="input-box"><label>Confirm Password *</label><input type="password" placeholder="••••••••"></div>
+        </div>
+        <button class="btn">Next Step &rarr;</button>
     </div>
-
-    <div class="row">
-        <div class="input-group">
-            <label>Password *</label>
-            <input type="password" placeholder="••••••••">
-        </div>
-        <div class="input-group">
-            <label>Confirm Password *</label>
-            <input type="password" placeholder="••••••••">
-        </div>
-    </div>
-
-    <button class="next-btn">Next Step &rarr;</button>
-</div>
+</body>
+</html>
