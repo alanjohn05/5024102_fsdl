@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #1e1b4b; padding: 40px; font-family: sans-serif; color: white; }
+        .container { max-width: 900px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .table-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; color: #334155; }
+        th { background: #f8fafc; text-align: left; padding: 15px; font-size: 11px; color: #64748b; text-transform: uppercase; }
+        td { padding: 15px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+        .country-info { font-weight: bold; display: block; }
+        .capital { color: #94a3b8; font-size: 12px; font-weight: normal; }
+        .tag { padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; }
+        .asia { background: #dcfce7; color: #166534; }
+        .namerica { background: #dbeafe; color: #1e40af; }
+        .status { border: 1px solid #3b82f6; color: #3b82f6; padding: 4px 12px; border-radius: 15px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h2>🌐 Global Insights</h2></div>
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr><th>Country</th><th>Continent</th><th>Population</th><th>GDP</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="country-info">IN India</span><span class="capital">New Delhi</span></td>
+                        <td><span class="tag asia">Asia</span></td>
+                        <td>1,400M</td>
+                        <td>$3.7T</td>
+                        <td><span class="status">Emerging</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="country-info">US USA</span><span class="capital">Washington D.C.</span></td>
+                        <td><span class="tag namerica">N. America</span></td>
+                        <td>331M</td>
+                        <td>$25T</td>
+                        <td><span class="status">Superpower</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
