@@ -1,63 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Registration Form</title>
+    <style>
+        body { background: #111827; padding: 40px; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; }
+        .form-container { background: white; padding: 30px; border-radius: 8px; width: 850px; }
+        .header { text-align: center; background: #111827; color: white; padding: 15px; border-radius: 8px 8px 0 0; margin: -30px -30px 20px -30px; }
+        .section-head { background: #1e1b4b; color: white; padding: 8px 15px; font-size: 14px; font-weight: bold; margin: 20px 0 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 10px; border: 1px solid #e5e7eb; font-size: 13px; color: #374151; }
+        .label { background: #f9fafb; font-weight: bold; width: 20%; }
+        input[type="text"], input[type="email"], input[type="password"], select, textarea {
+            width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box;
+        }
+        .footer { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .btn-reg { background: #1e1b4b; color: white; padding: 10px 30px; border-radius: 20px; border: none; cursor: pointer; }
+        .btn-clr { background: #f3f4f6; color: #374151; padding: 10px 30px; border-radius: 20px; border: none; cursor: pointer; }
+    </style>
 </head>
 <body>
-    <h1 align="center">Student Registration Form</h1>
-    <p align="center">Please fill all required details</p>
-    <form>
-        <table border="1" width="100%" cellpadding="8" cellspacing="0">
-            <tr><th colspan="4">Personal Information</th></tr>
+    <div class="form-container">
+        <div class="header"><h2>Student Registration Form</h2></div>
+        <div class="section-head">Personal Information</div>
+        <table>
             <tr>
-                <td>Full Name</td><td><input type="text" required></td>
-                <td>Date of Birth</td><td><input type="date"></td>
+                <td class="label">Full Name</td><td><input type="text" placeholder="Enter full name"></td>
+                <td class="label">Date of Birth</td><td><input type="date"></td>
             </tr>
             <tr>
-                <td>Email</td><td><input type="email" required></td>
-                <td>Password</td><td><input type="password"></td>
-            </tr>
-            <tr>
-                <td>Gender</td>
-                <td colspan="3">
-                    <input type="radio" name="g"> Male
-                    <input type="radio" name="g"> Female
-                    <input type="radio" name="g"> Other
-                </td>
-            </tr>
-            <tr><th colspan="4">Contact Details</th></tr>
-            <tr>
-                <td>Phone</td><td><input type="tel"></td>
-                <td>City</td><td><input type="text"></td>
-            </tr>
-            <tr>
-                <td>Address</td>
-                <td colspan="3"><textarea rows="2" cols="80"></textarea></td>
-            </tr>
-            <tr><th colspan="4">Education Details</th></tr>
-            <tr>
-                <td>Qualification</td>
-                <td>
-                    <select>
-                        <option>Select</option>
-                        <option>High School</option>
-                        <option>UG</option>
-                        <option>PG</option>
-                    </select>
-                </td>
-                <td>Mode</td>
-                <td>
-                    <input type="radio" name="m"> Online
-                    <input type="radio" name="m"> Offline
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4" align="center">
-                    <input type="submit" value="Register">
-                    <input type="reset" value="Clear">
-                </td>
+                <td class="label">Email Address</td><td><input type="email" placeholder="example@email.com"></td>
+                <td class="label">Password</td><td><input type="password" placeholder="Min 8 characters"></td>
             </tr>
         </table>
-    </form>
+        <div class="footer">
+            <button class="btn-reg">Register</button>
+            <button class="btn-clr">Clear Form</button>
+        </div>
+    </div>
 </body>
 </html>
