@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: #f1f5f9; padding: 40px; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; }
+        .ticket {
+            background: white; width: 750px; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;
+        }
+        .header {
+            background: linear-gradient(135deg, #134e4a, #1e3a8a);
+            color: white; text-align: center; padding: 20px;
+        }
+        .content { padding: 30px; position: relative; }
+        .photo-area {
+            position: absolute; right: 30px; top: 30px; width: 100px; height: 120px;
+            border: 2px dashed #cbd5e1; border-radius: 8px; display: flex; 
+            align-items: center; justify-content: center; font-size: 11px; color: #0d9488;
+        }
+        .college-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+        .college-sub { color: #64748b; font-size: 14px; margin-bottom: 10px; }
+        .hall-no { color: #0d9488; font-weight: bold; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; }
+        td { padding: 12px; border: 1px solid #f1f5f9; font-size: 14px; }
+        .label { color: #0d9488; font-weight: bold; width: 30%; background: #f8fafc; }
+        .badge { background: #166534; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+        .footer-btns { margin-top: 30px; display: flex; gap: 10px; justify-content: center; }
+        .btn-blue { background: #1e3a8a; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+        .btn-white { background: white; border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="header">
+            <h2 style="margin:0; letter-spacing:1px;">EXAMINATION HALL TICKET</h2>
+            <p style="margin:5px 0 0; font-size:12px; opacity:0.8;">Academic Year 2025-26 | Fr. Conceicao Rodrigues Institute of Engineering</p>
+        </div>
+        <div class="content">
+            <div class="photo-area">Upload Photo</div>
+            <div class="college-title">Fr. Conceicao Rodrigues Institute of Engineering</div>
+            <div class="college-sub">Bandra (W), Mumbai - 400 050</div>
+            <div class="hall-no">Hall Ticket No: CRIE-5024201-698</div>
+            <table>
+                <tr><td class="label">Student Name</td><td>Rahul Sharma</td></tr>
+                <tr><td class="label">Roll Number</td><td>5024201</td></tr>
+                <tr><td class="label">Course</td><td>B.Tech – Computer Engineering</td></tr>
+                <tr><td class="label">Semester</td><td><span class="badge">IV</span></td></tr>
+                <tr><td class="label">Examination Date</td><td><input type="text" value="dd-mm-yyyy" style="border:none; width:100px;"></td></tr>
+            </table>
+            <div class="footer-btns">
+                <button class="btn-blue">✓ Validate Date</button>
+                <button class="btn-white">🖨️ Print Hall Ticket</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
