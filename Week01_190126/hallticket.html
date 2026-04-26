@@ -5,31 +5,195 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hall Ticket with File Upload</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .header { background-color: #1a2a3a; color: white; padding: 15px; text-align: center; border-radius: 5px; margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        .upload-section { background-color: #e7f3ff; border: 2px dashed #007bff; padding: 20px; border-radius: 8px; text-align: center; margin-top: 20px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .upload-section {
+            background-color: #e7f3ff;
+            border: 2px dashed #007bff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .upload-section h3 {
+            color: #0056b3;
+            margin-bottom: 15px;
+        }
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .file-input-label {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .file-input-label:hover {
+            background-color: #0056b3;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .file-preview {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .preview-item {
+            position: relative;
+            display: inline-block;
+        }
+        .preview-item img {
+            max-width: 150px;
+            max-height: 150px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .file-info {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        .upload-button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 12px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .upload-button:hover {
+            background-color: #218838;
+        }
+        .upload-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h2>EXAMINATION HALL TICKET</h2>
-            <p>Academic Year 2025-26</p>
-        </div>
-        <table>
-            <tr><td><b>Student Name</b></td><td>Rahul Sharma</td></tr>
-            <tr><td><b>Roll Number</b></td><td>5024201</td></tr>
-            <tr><td><b>Course</b></td><td>B.Tech – Computer Engineering</td></tr>
-            <tr><td><b>Semester</b></td><td>IV</td></tr>
+        <h2 align="center">EXAMINATION HALL TICKET</h2>
+        <table width="100%" border="0">
+            <tr>
+                <td><b>College Name:</b></td>
+                <td colspan="2">Fr. Conceicao Rodrigues Institute of Engineering</td>
+            </tr>
+            <tr>
+                <td><b>Student Name</b></td>
+                <td>Mitesh Rane</td>
+                <td rowspan="5" align="center">
+                    <img id="studentPhoto" src="" alt="Photo" style="width:120px; height:150px; border:1px solid #000;">
+                </td>
+            </tr>
+            <tr>
+                <td><b>Roll Number</b></td>
+                <td>5024150</td>
+            </tr>
+            <tr>
+                <td><b>Course</b></td>
+                <td>B.Tech - Information Technology</td>
+            </tr>
+            <tr>
+                <td><b>Semester</b></td>
+                <td>IV</td>
+            </tr>
+            <tr>
+                <td><b>Exam Date</b></td>
+                <td>15 March 2026</td>
+            </tr>
+            <tr>
+                <td><b>Exam Time</b></td>
+                <td colspan="2">10:00 AM - 1:00 PM</td>
+            </tr>
+            <tr>
+                <td><b>Exam Center</b></td>
+                <td colspan="2">Main Block, Room No: 310</td>
+            </tr>
         </table>
+
         <div class="upload-section">
-            <h3>Upload Photo</h3>
-            <input type="file" id="imageInput" accept="image/*">
+            <h3>Upload Candidate Photo</h3>
+            <div class="file-input-wrapper">
+                <label for="imageInput" class="file-input-label">Choose Image</label>
+                <input type="file" id="imageInput" name="image" accept="image/*">
+            </div>
+            <button id="uploadBtn" class="upload-button" disabled>Save Photo</button>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <table width="100%">
+                <tr>
+                    <td align="left">_________________<br>Student Signature</td>
+                    <td align="center">_________________<br>Controller of Examinations</td>
+                    <td align="right">_________________<br>Principal</td>
+                </tr>
+            </table>
         </div>
     </div>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const studentPhoto = document.getElementById('studentPhoto');
+
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    studentPhoto.src = e.target.result;
+                    uploadBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        uploadBtn.addEventListener('click', function() {
+            const fileInput = document.getElementById('imageInput');
+            if (fileInput.files.length === 0) {
+                alert('Please select an image first');
+                return;
+            }
+            const file = fileInput.files[0];
+            const fileSizeKB = (file.size / 1024).toFixed(2);
+            alert('Photo saved successfully!\n\nFile: ' + file.name + '\nSize: ' + fileSizeKB + ' KB');
+            console.log('Photo saved:', file);
+        });
+    </script>
 </body>
 </html>
