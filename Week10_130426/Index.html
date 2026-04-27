@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Exp 10 - Student Records</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js">
+ </script>
+ <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght
+ @400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+ rel="stylesheet" />
+ <link rel="stylesheet" href="style.css" />
+</head>
+<body ng-controller="StudentCtrl">
+ <!-- Sidebar -->
+ <aside class="sidebar">
+ <div class="logo"> RecordBook</div>
+ <nav>
+ <button class="nbtn" ng-class="{active: view==='add'}"
+ ng-click="setView('add')">+ Add Student</button>
+ <button class="nbtn" ng-class="{active: view==='list'}"
+ ng-click="setView('list')">
+ Records <span class="cnt">{{ students.length }}</span>
+ </button>
+ </nav>
+ <div class="stat">
+ <span>Avg GPA</span>
+ <strong>{{ avgGpa() }}</strong>
+ </div>
+ <div class="stat">
+ <span>Total</span>
+ <strong>{{ students.length }}</strong>
+ </div>
+ </aside>
+ <!-- Main content -->
+ <main class="main">
+ <!-- ADD FORM -->
+ <section ng-show="view==='add'" class="panel">
+ <h2>Add New Student</h2>
+ <p class="sub">All fields required. Validations are live.</p>
+ <form name="sf" ng-submit="addStudent(sf)" novalidate class="fgrid">
+ <div class="fw" ng-class="{'err-wrap': sf.sName.$invalid && sf.sName.$touched}">
+ <label>Full Name</label>
+ <input name="sName" ng-model="form.name" required
+ minlength="3" maxlength="40"
+ placeholder="e.g. Kavya Nair" class="inp" />
+ <span class="err"
+ ng-show="sf.sName.$touched && sf.sName.$error.required">
+ Name is required.</span>
+ <span class="err"
+ ng-show="sf.sName.$touched && sf.sName.$error.minlength">
+ Minimum 3 characters.</span>
+ </div>
+ <div class="fw" ng-class="{'err-wrap': sf.roll.$invalid && sf.roll.$touched}">
+ <label>Roll Number</label>
+ <input name="roll" ng-model="form.roll" required
+ pattern="[A-Za-z0-9]{4,10}"
+ placeholder="e.g. ME2305" class="inp" />
+ <span class="err"
+ ng-show="sf.roll.$touched &&
+ (sf.roll.$error.required || sf.roll.$error.pattern)">
+ 4-10 alphanumeric characters.</span>
+ </div>
+ <div class="fw" ng-class="{'err-wrap': sf.email.$invalid && sf.email.$touched}">
+ <label>Email</label>
+ <input name="email" type="email" ng-model="form.email" required
+ placeholder="student@college.edu" class="inp" />
+ <span class="err"
+ ng-show="sf.email.$touched && sf.email.$invalid">
+ Enter a valid email.</span>
+ </div>
+ <div class="fw" ng-class="{'err-wrap': sf.gpa.$invalid && sf.gpa.$touched}">
+ <label>GPA (0 - 10)</label>
+ <input name="gpa" type="number" ng-model="form.gpa"
+ required min="0" max="10" step="0.1"
+ placeholder="e.g. 8.5" class="inp" />
+ <span class="err"
+ ng-show="sf.gpa.$touched && sf.gpa.$error.required">
+ GPA is required.</span>
+ <span class="err"
+ ng-show="sf.gpa.$touched &&
+ (sf.gpa.$error.min || sf.gpa.$error.max)">
+ GPA must be 0-10.</span>
+ </div>
+ <div class="fw">
+ <label>Department</label>
+ <select name="dept" ng-model="form.dept" required class="inp">
+ <option value="">-- Select --</option>
+ <option ng-repeat="d in depts" value="{{ d }}">{{ d }}</option>
+ </select>
+ </div>
+ <div class="fw">
+   <label>Year</label>
+ <div class="rrow">
+ <label ng-repeat="y in [1,2,3,4]" class="rlabel">
+ <input type="radio" ng-model="form.year" ng-value="y" />
+ Year {{ y }}
+ </label>
+ </div>
+ </div>
+ <!-- $valid property display -->
+ <div class="fstatus" ng-class="sf.$valid ? 'fok' : 'fnope'">
+ <span ng-show="sf.$valid">
+ Form is valid - ready to submit ($valid = true)</span>
+ <span ng-show="!sf.$valid">
+ Fix errors above &nbsp; $valid = {{ sf.$valid }}</span>
+ </div>
+ <div class="brow">
+ <button type="submit" class="btn-p"
+ ng-disabled="sf.$invalid">Add Student</button>
+ <button type="button" class="btn-g"
+ ng-click="resetForm(sf)">Reset</button>
+ </div>
+ </form>
+ </section>
+ <!-- RECORDS TABLE -->
+ <section ng-show="view==='list'" class="panel">
+ <div class="lhead">
+ <h2>Student Records</h2>
+ <input ng-model="search" placeholder="Search name / roll..."
+ class="inp sinp" />
+ </div>
+ <p class="sub" ng-show="students.length === 0">
+ No records yet. Add a student first.</p>
+ <div class="toast" ng-show="toast.show"
+ ng-class="toast.type">{{ toast.msg }}</div>
+ <table ng-show="students.length > 0">
+ <thead>
+ <tr>
+ <th ng-click="sortBy('roll')" class="sh">Roll &#8597;</th>
+ <th ng-click="sortBy('name')" class="sh">Name &#8597;</th>
+ <th>Dept</th>
+ <th>Year</th>
+ <th ng-click="sortBy('gpa')" class="sh">GPA &#8597;</th>
+ <th>Grade</th>
+ <th>Action</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr ng-repeat="s in students | filter:search | orderBy:sortKey:sortRev">
+ <td class="mono">{{ s.roll }}</td>
+ <td><strong>{{ s.name }}</strong></td>
+ <td>{{ s.dept }}</td>
+ <td>Y{{ s.year }}</td>
+ <td><span class="gpill" ng-class="gc(s.gpa)">
+ {{ s.gpa | number:1 }}</span></td>
+ <td><span class="gbadge" ng-class="gc(s.gpa)">
+ {{ lg(s.gpa) }}</span></td>
+ <td><button class="delbtn" ng-click="del(s)">&#10005;</button></td>
+ </tr>
+ </tbody>
+ </table>
+ </section>
+ </main>
+ <script src="app.js"></script>
+</body>
+</html>
