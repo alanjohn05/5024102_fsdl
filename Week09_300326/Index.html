@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="helloApp">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Exp 9 - Hello Angular</title>
+ <script
+ src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js">
+ </script>
+ <link
+ href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800
+ &family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+ <link rel="stylesheet" href="style.css" />
+</head>
+<body ng-controller="HelloCtrl">
+ <div class="orb orb1"></div>
+ <div class="orb orb2"></div>
+ <div class="orb orb3"></div>
+ <main class="shell">
+ <div class="badges">
+ <span class="badge">AngularJS 1.8</span>
+ <span class="badge accent">Experiment 9</span>
+ </div>
+ <h1>Hello, <em>{{ name || "World" }}</em> </h1>
+ <p class="sub">ng-model &middot; ng-controller &middot; expressions
+ &mdash; live</p>
+ <div class="card">
+ <label>Your Name</label>
+ <input ng-model="name" placeholder="Type your name..."
+ class="field" autofocus />
+ <div class="grid">
+ <div class="chip">
+ <span class="clabel">Greeting</span>
+ <strong>{{ greet() }}</strong>
+ </div>
+ <div class="chip">
+ <span class="clabel">Characters</span>
+ <strong>{{ (name || 'World').length }}</strong>
+ </div>
+ <div class="chip">
+ <span class="clabel">Uppercase</span>
+ <strong>{{ (name || 'World').toUpperCase() }}</strong>
+ </div>
+ <div class="chip">
+ <span class="clabel">Live Clock</span>
+ <strong class="mono">{{ time }}</strong>
+ </div>
+ </div>
+ </div>
+ <div class="concepts">
+ <div class="con">
+ <code>ng-app</code><span>Bootstraps the app</span>
+ </div>
+ <div class="con">
+ <code>ng-controller</code><span>Links JS logic</span>
+ </div>
+ <div class="con">
+ <code>ng-model</code><span>Two-way binding</span>
+ </div>
+ <div class="con">
+ <code>{{ }}</code><span>Expression output</span>
+ </div>
+ </div>
+ <footer>Week 9 &middot; Full Stack Lab</footer>
+ </main>
+ <script src="app.js"></script>
+</body>
+</html>
